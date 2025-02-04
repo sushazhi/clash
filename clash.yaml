@@ -17,7 +17,7 @@ dns:
 proxy-providers:
   NoMoreWalls:
     type: http
-    url: https://ghproxy.cc/https://raw.githubusercontent.com/peasoft/NoMoreWalls/master/list.yml
+    url: https://raw.githubusercontent.com/peasoft/NoMoreWalls/master/list.yml
     interval: 7200
     #proxy: ♻️ 自动选择
     health-check:
@@ -35,7 +35,7 @@ proxy-providers:
       url: https://www.gstatic.com/generate_204
   NodeFree:
     type: http
-    url: https://nodefree.githubrowcontent.com/2025/01/20250108.yaml
+    url: https://nodefree.githubrowcontent.com/2025/02/20250204.yaml
     interval: 7200
     #proxy: ♻️ 自动选择
     health-check:
@@ -44,7 +44,7 @@ proxy-providers:
       url: https://www.gstatic.com/generate_204
   Ermaozi:
     type: http
-    url: https://ghproxy.cc/https://raw.githubusercontent.com/ermaozi/get_subscribe/main/subscribe/clash.yml 
+    url: https://raw.githubusercontent.com/ermaozi/get_subscribe/main/subscribe/clash.yml 
     interval: 7200
     #proxy: ♻️ 自动选择
     health-check:
