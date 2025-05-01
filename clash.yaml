@@ -35,7 +35,7 @@ proxy-providers:
       url: https://www.gstatic.com/generate_204
   NodeFree:
     type: http
-    url: https://nodefree.githubrowcontent.com/2025/02/20250218.yaml
+    url: https://nodefree.githubrowcontent.com/2025/05/20250501.yaml
     interval: 7200
     #proxy: ♻️ 自动选择
     health-check:
