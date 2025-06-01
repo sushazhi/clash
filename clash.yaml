@@ -35,7 +35,7 @@ proxy-providers:
       url: https://www.gstatic.com/generate_204
   NodeFree:
     type: http
-    url: https://nodefree.githubrowcontent.com/2025/05/20250501.yaml
+    url: https://nodefree.githubrowcontent.com/2025/06/20250601.yaml
     interval: 7200
     #proxy: ♻️ 自动选择
     health-check:
@@ -45,6 +45,24 @@ proxy-providers:
   Ermaozi:
     type: http
     url: https://raw.githubusercontent.com/ermaozi/get_subscribe/main/subscribe/clash.yml 
+    interval: 7200
+    #proxy: ♻️ 自动选择
+    health-check:
+      enable: true
+      interval: 600
+      url: https://www.gstatic.com/generate_204
+  OpenRunner:
+    type: http
+    url: https://free.datiya.com/uploads/20250601-clash.yaml
+    interval: 7200
+    #proxy: ♻️ 自动选择
+    health-check:
+      enable: true
+      interval: 600
+      url: https://www.gstatic.com/generate_204
+  ripaojiedian:
+    type: http
+    url: https://raw.githubusercontent.com/ripaojiedian/freenode/main/clash
     interval: 7200
     #proxy: ♻️ 自动选择
     health-check:
@@ -66,6 +84,8 @@ proxy-groups:
     - Pawdroid
     - NodeFree
     - Ermaozi
+    - OpenRunner
+    - ripaojiedian
   type: load-balance
   url: https://www.google.com/
 - interval: 300
@@ -75,6 +95,8 @@ proxy-groups:
     - Pawdroid
     - NodeFree
     - Ermaozi
+    - OpenRunner
+    - ripaojiedian
   type: fallback
   url: https://www.google.com/
 - interval: 300
@@ -84,6 +106,8 @@ proxy-groups:
     - Pawdroid
     - NodeFree
     - Ermaozi
+    - OpenRunner
+    - ripaojiedian
   tolerance: 20
   type: url-test
   url: https://www.google.com/
@@ -93,6 +117,8 @@ proxy-groups:
     - Pawdroid
     - NodeFree
     - Ermaozi
+    - OpenRunner
+    - ripaojiedian
   type: select
 - name: 🌐 突破锁区
   proxies:
