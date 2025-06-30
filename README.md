@@ -11,7 +11,7 @@
 <img src=https://github.com/user-attachments/assets/2ff25684-7a71-4c5d-8b2d-59c9d118194d width="600" /><br />
 </div>
 #### 8.2.7.2 不能进入SSH后台
--如果不能进入SSH后台，则需要拆机短接.
+- 如果不能进入SSH后台，则需要拆机短接.
 - 拆机短接图示触点,上电，等待约2-3秒，电脑提示`发现一个 MASKROM 设备`。
 <div style="width:100%;margin-top:40px;margin:5px;">
 <img src=https://github.com/user-attachments/assets/2381520a-cb2a-4599-8d21-5b0bad7ec93f width="600" /><br />
