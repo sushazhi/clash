@@ -5,8 +5,10 @@
 - OEC/OEC-Turbo 如果能够进入原厂SSH镜像后台，可以免拆刷入。
 - 电脑，盒子均不要联网，reset OEC/OEC-Turbo，用网线直接连接盒子与电脑，修改电脑IP为：10.9.8.x（如10.9.8.8），登录ssh后台（IP：10.9.8.7，用户名root,密码SN后四位+rk35662019）
 - 在进入SSH后台后,使用fw_setenv xl_softmode "factory" 设置bootloader模式。
-- 断开电源，长按RESET键，用Type-C线连接电脑，工具提示`发现一个 LOADER 设备`。
-- 右键表格栏，选择添加项，地址输入0x00000000,路径选择解压出来的[OEC/OEC-Turbo Base]。刷入镜像，等待完成。
+- 断开电源，长按RESET键，用Type-C线连接电脑，工具提示`发现一个 LOADER 设备。右键添加项。
+地址 0x00000000, 名字 system, 路径选择
+- 右键表格栏，选择添加项，地址输入0x00000000,路径选择解压出来的[OEC/OEC-Turbo Base]（要刷的 Armbian.img 系统。
+点击执行，等待进度条完成即可）。刷入镜像，等待完成。
 <div style="width:100%;margin-top:40px;margin:5px;">
 <img src=https://github.com/user-attachments/assets/2ff25684-7a71-4c5d-8b2d-59c9d118194d width="600" /><br />
 </div>
