@@ -1,6 +1,6 @@
 #### 8.2.7 OEC/OEC-Turbo 的安装方法
 - 下载 [RKDevTool](https://github.com/ophub/kernel/releases/download/tools/FastRhino_r68s_RKDevTool_Release_v2.86___DriverAssitant_v5.1.1.tar.gz) 工具及驱动，解压并安装 DriverAssitant 驱动程序，打开 RKDevTool 工具。(注意，请使用2.84版本工具而不是2.86，2.86版本无法写入全盘镜像)
-- 下载 [OEC/OEC-Turbo Base]并解压。
+- 下载 OEC/OEC-Turbo Armbian系统文件（如Armbian_25.08.0_rockchip_wxy-oect_bookworm_6.12.35_server_2025.07.01.img.gz）并解压。
 ##### 8.2.7.1 能够进入SSH后台
 - OEC/OEC-Turbo 如果能够进入原厂SSH镜像后台，可以免拆刷入。
 - 电脑，盒子均不要联网，reset OEC/OEC-Turbo，用网线直接连接盒子与电脑，修改电脑IP为：10.9.8.x（如10.9.8.8），登录ssh后台（IP：10.9.8.7，用户名root,密码SN后四位+rk35662019）
