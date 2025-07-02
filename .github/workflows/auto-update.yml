@@ -1,31 +1,36 @@
-name: Auto Update Date
+name: Update Clash Config Date
 
 on:
   schedule:
-    - cron: '0 4 * * *'  # 每天UTC时间00:00运行（北京时间08:00）
-  workflow_dispatch:     # 允许手动触发
+    # 每天 UTC 时间 003:00 运行（北京时间 11:00）
+    - cron: '0 3 * * *'
+  workflow_dispatch:  # 允许手动触发
 
 jobs:
-  update:
+  update-date:
     runs-on: ubuntu-latest
+    
     steps:
-    - name: Checkout Repository
+    - name: Checkout repository
       uses: actions/checkout@v4
-
-    - name: Set up Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: '3.10'
-
-    - name: Update Date in clash.yaml
+      
+    - name: Update date in clash.yaml
       run: |
-        python update_date.py
-        cat clash.yaml  # 可选：查看修改后的文件内容
-
-    - name: Commit Changes
-      run: |
-        git config --global user.name 'github-actions'
-        git config --global user.email 'actions@github.com'
+        # 获取当前日期并格式化为所需格式
+        TODAY=$(date +%Y/%m/%Y%m%d)
+        TODAY_SHORT=$(date +%Y%m%d)
+        
+        # 提取年月部分（用于第一个格式）
+        YEAR=$(date +%Y)
+        MONTH=$(date +%m)
+        
+        # 替换文件中的日期
+        sed -i "s|/[0-9]\{4\}/[0-9]\{2\}/[0-9]\{8\}|/$TODAY|g" clash.yaml
+        sed -i "s|[0-9]\{8\}|$TODAY_SHORT|g" clash.yaml
+        
+        # 提交更改
+        git config --global user.name "GitHub Actions"
+        git config --global user.email "actions@github.com"
         git add clash.yaml
-        git commit -m "自动更新日期: $(date +'%Y/%m/%d')"
+        git commit -m "Auto update date to $TODAY_SHORT" || echo "No changes to commit"
         git push
