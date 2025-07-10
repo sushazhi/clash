@@ -26,7 +26,7 @@ proxy-providers:
       url: https://www.gstatic.com/generate_204
   Pawdroid:
     type: http
-    url: https://suo.yt/z6Khkmo
+    url: https://api.wcc.best/sub?target=clash&url=https%3A%2F%2Fproxy.v2gh.com%2Fhttps%3A%2F%2Fraw.githubusercontent.com%2FPawdroid%2FFree-servers%2Fmain%2Fsub&insert=false&config=https%3A%2F%2Fraw.githubusercontent.com%2FACL4SSR%2FACL4SSR%2Fmaster%2FClash%2Fconfig%2FACL4SSR_Online.ini
     interval: 7200
     #proxy: ♻️ 自动选择
     health-check:
