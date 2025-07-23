@@ -35,7 +35,7 @@ proxy-providers:
       url: https://www.gstatic.com/generate_204
   NodeFree:
     type: http
-    url: https://nodefree.githubrowcontent.com/2025/07/20250722.yaml
+    url: https://nodefree.githubrowcontent.com/2025/07/20250723.yaml
     interval: 7200
     #proxy: ♻️ 自动选择
     health-check:
@@ -53,7 +53,7 @@ proxy-providers:
       url: https://www.gstatic.com/generate_204
   OpenRunner:
     type: http
-    url: https://free.datiya.com/uploads/20250722-clash.yaml
+    url: https://free.datiya.com/uploads/20250723-clash.yaml
     interval: 7200
     #proxy: ♻️ 自动选择
     health-check:
