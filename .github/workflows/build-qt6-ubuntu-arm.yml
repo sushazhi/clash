@@ -17,42 +17,20 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           fetch-depth: 0
 
-      - name: Set up QEMU and run on aarch64
-        uses: uraimo/run-on-arch-action@v2.7.0
-        id: run-on-arch
-        with:
-          arch: aarch64
-          distro: ubuntu22.04
-          githubToken: ${{ secrets.GITHUB_TOKEN }}
-          # 安装构建依赖
-          install: |
-            apt-get update
-            DEBIAN_FRONTEND=noninteractive apt-get install -y \
-              build-essential \
-              cmake \
-              ninja-build \
-              pkg-config \
-              git \
-              perl \
-              python3 \
-              gperf \
-              bison \
-              flex \
-              libgl1-mesa-dev \
-              libx11-dev \
-              libxcb-xinerama0-dev \
-              libfontconfig1-dev \
-              libfreetype6-dev \
-              libssl-dev \
-              libglib2.0-dev \
-              libsqlite3-dev \
-              libicu-dev \
-              wget \
-              tar \
-              xz-utils \
-              ca-certificates
-          run: |
-            echo "=== Building Qt6 for Ubuntu ARM64 ==="
+- name: Set up QEMU and run on aarch64
+  uses: uraimo/run-on-arch-action@v2.7.0
+  with:
+    arch: aarch64
+    distro: ubuntu22.04
+    baseImage: ubuntu:22.04   # ←←← 关键修复！
+    githubToken: ${{ secrets.GITHUB_TOKEN }}
+    install: |
+      apt-get update
+      DEBIAN_FRONTEND=noninteractive apt-get install -y \
+        build-essential cmake ninja-build pkg-config git perl python3 gperf bison flex \
+        libssl-dev libglib2.0-dev libsqlite3-dev libicu-dev tar xz-utils
+    run: |
+      # your Qt6 build script here
 
             QT_VERSION=6.7.0
             SRC_DIR=qt6-src
