@@ -1,0 +1,131 @@
+name: Build Qt6 for Ubuntu ARM64 and Commit to Repo
+
+on:
+  workflow_dispatch:  # 手动触发
+
+permissions:
+  contents: write  # 允许推送代码
+
+jobs:
+  build-qt6-ubuntu-arm:
+    runs-on: ubuntu-22.04  # x86_64 runner + QEMU 模拟 ARM64
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
+
+      - name: Set up QEMU and run on aarch64
+        uses: uraimo/run-on-arch-action@v2.7.0
+        id: run-on-arch
+        with:
+          arch: aarch64
+          distro: ubuntu22.04
+          githubToken: ${{ secrets.GITHUB_TOKEN }}
+          # 安装构建依赖
+          install: |
+            apt-get update
+            DEBIAN_FRONTEND=noninteractive apt-get install -y \
+              build-essential \
+              cmake \
+              ninja-build \
+              pkg-config \
+              git \
+              perl \
+              python3 \
+              gperf \
+              bison \
+              flex \
+              libgl1-mesa-dev \
+              libx11-dev \
+              libxcb-xinerama0-dev \
+              libfontconfig1-dev \
+              libfreetype6-dev \
+              libssl-dev \
+              libglib2.0-dev \
+              libsqlite3-dev \
+              libicu-dev \
+              wget \
+              tar \
+              xz-utils \
+              ca-certificates
+          run: |
+            echo "=== Building Qt6 for Ubuntu ARM64 ==="
+
+            QT_VERSION=6.7.0
+            SRC_DIR=qt6-src
+            BUILD_DIR=qt6-build
+            INSTALL_DIR=/opt/qt6-arm
+
+            # Clone Qt6 source (only qtbase needed for qBittorrent)
+            git clone --depth=1 --branch v${QT_VERSION} https://code.qt.io/qt/qt5.git ${SRC_DIR}
+            cd ${SRC_DIR}
+            perl init-repository --module-subset=qtbase
+
+            # Configure
+            mkdir -p ../${BUILD_DIR}
+            cd ../${BUILD_DIR}
+
+            ../${SRC_DIR}/configure \
+              -prefix ${INSTALL_DIR} \
+              -release \
+              -opensource \
+              -confirm-license \
+              -static \
+              -no-opengl \
+              -no-feature-gui \
+              -no-feature-widgets \
+              -no-feature-sql \
+              -no-feature-testlib \
+              -feature-network \
+              -feature-con concurrent \
+              -ssl \
+              -system-freetype \
+              -system-sqlite \
+              -make libs \
+              -nomake examples \
+              -nomake tests \
+              -skip qt3d \
+              -skip qt5compat \
+              -skip qtdeclarative \
+              -skip qtwebengine \
+              -verbose
+
+            # Build and install
+            cmake --build . -j$(nproc)
+            cmake --install .
+
+            # Package
+            cd ${INSTALL_DIR}
+            tar -czf qt6-ubuntu-arm64-${QT_VERSION}.tar.gz .
+
+            # Copy to mounted workspace so outer step can access it
+            mkdir -p /workspace/prebuilt/qt6-ubuntu-arm64
+            cp qt6-ubuntu-arm64-${QT_VERSION}.tar.gz /workspace/prebuilt/qt6-ubuntu-arm64/
+
+      - name: Push built Qt6 to repository
+        run: |
+          # 回到主工作区
+          cd $GITHUB_WORKSPACE
+
+          # 检查产物是否存在
+          ls -la /tmp/run-on-arch/workspace/prebuilt/qt6-ubuntu-arm64/
+
+          # 复制产物到当前 repo
+          mkdir -p prebuilt/qt6-ubuntu-arm64
+          cp /tmp/run-on-arch/workspace/prebuilt/qt6-ubuntu-arm64/*.tar.gz prebuilt/qt6-ubuntu-arm64/
+
+          # 配置 Git
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+          # 提交并推送
+          git add prebuilt/qt6-ubuntu-arm64/
+          if ! git diff --cached --quiet; then
+            git commit -m "📦 Add prebuilt Qt6 6.7.0 for Ubuntu ARM64"
+            git push origin HEAD:${{ github.ref_name }}
+          else
+            echo "No changes to commit."
+          fi
