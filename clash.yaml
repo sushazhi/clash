@@ -1,234 +1,35 @@
-port: 7890
-socks-port: 7891
-allow-lan: true
-mode: Rule
-log-level: info
-external-controller: :9090
-dns:
-  enabled: true
-  nameserver:
-    - 119.29.29.29
-    - 223.5.5.5
-  fallback:
-    - 8.8.8.8
-    - 8.8.4.4
-    - tls://1.0.0.1:853
-    - tls://dns.google:853
-proxy-providers:
-  NoMoreWalls:
-    type: http
-    url: https://raw.githubusercontent.com/peasoft/NoMoreWalls/master/list.yml
-    interval: 7200
-    #proxy: ♻️ 自动选择
-    health-check:
-      enable: true
-      interval: 600
-      url: https://www.gstatic.com/generate_204
-  Pawdroid:
-    type: http
-    url: https://api.wcc.best/sub?target=clash&url=https%3A%2F%2Fproxy.v2gh.com%2Fhttps%3A%2F%2Fraw.githubusercontent.com%2FPawdroid%2FFree-servers%2Fmain%2Fsub&insert=false&config=https%3A%2F%2Fraw.githubusercontent.com%2FACL4SSR%2FACL4SSR%2Fmaster%2FClash%2Fconfig%2FACL4SSR_Online.ini
-    interval: 7200
-    #proxy: ♻️ 自动选择
-    health-check:
-      enable: true
-      interval: 600
-      url: https://www.gstatic.com/generate_204
-  Barabama:
-    type: http
-    url: https://raw.githubusercontent.com/Barabama/FreeNodes/main/nodes/ndnode.yaml
-    interval: 7200
-    #proxy: ♻️ 自动选择
-    health-check:
-      enable: true
-      interval: 600
-      url: https://www.gstatic.com/generate_204
-  Ermaozi:
-    type: http
-    url: https://raw.githubusercontent.com/ermaozi/get_subscribe/main/subscribe/clash.yml 
-    interval: 7200
-    #proxy: ♻️ 自动选择
-    health-check:
-      enable: true
-      interval: 600
-      url: https://www.gstatic.com/generate_204
-  OpenRunner:
-    type: http
-    url: https://free.datiya.com/uploads/20260120-clash.yaml
-    interval: 7200
-    #proxy: ♻️ 自动选择
-    health-check:
-      enable: true
-      interval: 600
-      url: https://www.gstatic.com/generate_204
-  ripaojiedian:
-    type: http
-    url: https://raw.githubusercontent.com/ripaojiedian/freenode/main/clash
-    interval: 7200
-    #proxy: ♻️ 自动选择
-    health-check:
-      enable: true
-      interval: 600
-      url: https://www.gstatic.com/generate_204
-proxy-groups:
-- name: 🚀 选择代理
-  proxies:
-  - 🎯 负载均衡
-  - ♻ 自动选择
-  - 🔰 延迟最低
-  - ✅ 手动选择
-  type: select
-- interval: 300
-  name: 🎯 负载均衡
-  use:
-    - NoMoreWalls
-    - Pawdroid
-    - Barabama
-    - Ermaozi
-    - OpenRunner
-    - ripaojiedian
-  type: load-balance
-  url: https://www.google.com/
-- interval: 300
-  name: ♻ 自动选择
-  use:
-    - NoMoreWalls
-    - Pawdroid
-    - Barabama
-    - Ermaozi
-    - OpenRunner
-    - ripaojiedian
-  type: fallback
-  url: https://www.google.com/
-- interval: 300
-  name: 🔰 延迟最低
-  use:
-    - NoMoreWalls
-    - Pawdroid
-    - Barabama
-    - Ermaozi
-    - OpenRunner
-    - ripaojiedian
-  tolerance: 20
-  type: url-test
-  url: https://www.google.com/
-- name: ✅ 手动选择
-  use:
-    - NoMoreWalls
-    - Pawdroid
-    - Barabama
-    - Ermaozi
-    - OpenRunner
-    - ripaojiedian
-  type: select
-- name: 🌐 突破锁区
-  proxies:
-  - DIRECT
-  - 🚀 选择代理
-  type: select
-- name: 🐟 漏网之鱼
-  proxies:
-  - 🚀 选择代理
-  - DIRECT
-  type: select
-- name: ⛔ 广告拦截
-  proxies:
-  - REJECT
-  - DIRECT
-  - 🚀 选择代理
-  type: select
-rule-providers:
-  reject:
-    type: http
-    behavior: domain
-    url: "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/reject.txt"
-  #  path: ./ruleset/reject.yaml
-    interval: 86400
-  icloud:
-    type: http
-    behavior: domain
-    url: "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/icloud.txt"
-  #  path: ./ruleset/icloud.yaml
-    interval: 86400
-  apple:
-    type: http
-    behavior: domain
-    url: "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/apple.txt"
-  #  path: ./ruleset/apple.yaml
-    interval: 86400
-  google:
-    type: http
-    behavior: domain
-    url: "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/google.txt"
-  #  path: ./ruleset/google.yaml
-    interval: 86400
-  proxy:
-    type: http
-    behavior: domain
-    url: "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/proxy.txt"
-  #  path: ./ruleset/proxy.yaml
-    interval: 86400
-  direct:
-    type: http
-    behavior: domain
-    url: "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/direct.txt"
-  #  path: ./ruleset/direct.yaml
-    interval: 86400
-  private:
-    type: http
-    behavior: domain
-    url: "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/private.txt"
-  #  path: ./ruleset/private.yaml
-    interval: 86400
-  gfw:
-    type: http
-    behavior: domain
-    url: "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/gfw.txt"
-  #  path: ./ruleset/gfw.yaml
-    interval: 86400
-  tld-not-cn:
-    type: http
-    behavior: domain
-    url: "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/tld-not-cn.txt"
-  #  path: ./ruleset/tld-not-cn.yaml
-    interval: 86400
-  telegramcidr:
-    type: http
-    behavior: ipcidr
-    url: "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/telegramcidr.txt"
-  #  path: ./ruleset/telegramcidr.yaml
-    interval: 86400
-  cncidr:
-    type: http
-    behavior: ipcidr
-    url: "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/cncidr.txt"
-  #  path: ./ruleset/cncidr.yaml
-    interval: 86400
-  lancidr:
-    type: http
-    behavior: ipcidr
-    url: "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/lancidr.txt"
-  #  path: ./ruleset/lancidr.yaml
-    interval: 86400
-  applications:
-    type: http
-    behavior: classical
-    url: "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/applications.txt"
-  #  path: ./ruleset/applications.yaml
-    interval: 86400
-rules:
-  - RULE-SET,applications,DIRECT
-  - DOMAIN,clash.razord.top,DIRECT
-  - DOMAIN,yacd.haishan.me,DIRECT
-  - RULE-SET,private,DIRECT
-  - RULE-SET,reject,REJECT
-  - RULE-SET,icloud,DIRECT
-  - RULE-SET,apple,DIRECT
-  - RULE-SET,google,🚀 选择代理
-  - RULE-SET,proxy,🚀 选择代理
-  - RULE-SET,direct,DIRECT
-  - RULE-SET,lancidr,DIRECT
-  - RULE-SET,cncidr,DIRECT
-  - RULE-SET,telegramcidr,🚀 选择代理
-  - GEOIP,LAN,DIRECT
-  - GEOIP,CN,DIRECT
-  - MATCH,🚀 选择代理
+name: Update Clash Config Date
+
+on:
+  schedule:
+    # 每天 UTC 3:00 → 北京时间 11:00
+    - cron: '0 3 * * *'
+  workflow_dispatch:  # 允许手动触发
+
+jobs:
+  update-date:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+
+      - name: Update date in clash.yaml
+        run: |
+          # 切换为北京时间
+          export TZ='Asia/Shanghai'
+          # 获取当前日期并格式化为所需格式
+          TODAY=$(date +%Y/%m/%Y%m%d)
+          TODAY_SHORT=$(date +%Y%m%d)
+          
+          # 替换文件中的日期（精准匹配格式）
+          sed -i "s|/[0-9]\{4\}/[0-9]\{2\}/[0-9]\{8\}|/$TODAY|g" clash.yaml
+          sed -i "s|[0-9]\{8\}|$TODAY_SHORT|g" clash.yaml
+          
+          # 提交并推送更改
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
+          git add clash.yaml
+          git commit -m "Auto update date to $TODAY_SHORT" || echo "No changes to commit"
+          git push
