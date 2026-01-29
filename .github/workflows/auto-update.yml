@@ -2,35 +2,34 @@ name: Update Clash Config Date
 
 on:
   schedule:
-    # 每天 UTC 时间 003:00 运行（北京时间 11:00）
+    # 每天 UTC 3:00 → 北京时间 11:00
     - cron: '0 3 * * *'
   workflow_dispatch:  # 允许手动触发
 
 jobs:
   update-date:
     runs-on: ubuntu-latest
-    
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
-      
-    - name: Update date in clash.yaml
-      run: |
-        # 获取当前日期并格式化为所需格式
-        TODAY=$(date +%Y/%m/%Y%m%d)
-        TODAY_SHORT=$(date +%Y%m%d)
-        
-        # 提取年月部分（用于第一个格式）
-        YEAR=$(date +%Y)
-        MONTH=$(date +%m)
-        
-        # 替换文件中的日期
-        sed -i "s|/[0-9]\{4\}/[0-9]\{2\}/[0-9]\{8\}|/$TODAY|g" clash.yaml
-        sed -i "s|[0-9]\{8\}|$TODAY_SHORT|g" clash.yaml
-        
-        # 提交更改
-        git config --global user.name "GitHub Actions"
-        git config --global user.email "actions@github.com"
-        git add clash.yaml
-        git commit -m "Auto update date to $TODAY_SHORT" || echo "No changes to commit"
-        git push
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+
+      - name: Update date in clash.yaml
+        run: |
+          # 切换为北京时间
+          export TZ='Asia/Shanghai'
+          # 获取当前日期并格式化为所需格式
+          TODAY=$(date +%Y/%m/%Y%m%d)
+          TODAY_SHORT=$(date +%Y%m%d)
+          
+          # 替换文件中的日期（精准匹配格式）
+          sed -i "s|/[0-9]\{4\}/[0-9]\{2\}/[0-9]\{8\}|/$TODAY|g" clash.yaml
+          sed -i "s|[0-9]\{8\}|$TODAY_SHORT|g" clash.yaml
+          
+          # 提交并推送更改
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
+          git add clash.yaml
+          git commit -m "Auto update date to $TODAY_SHORT" || echo "No changes to commit"
+          git push
