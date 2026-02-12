@@ -53,7 +53,7 @@ proxy-providers:
       url: https://www.gstatic.com/generate_204
   OpenRunner:
     type: http
-    url: https://free.datiya.com/uploads/20260211-clash.yaml
+    url: https://free.datiya.com/uploads/20260212-clash.yaml
     interval: 7200
     #proxy: ♻️ 自动选择
     health-check:
